@@ -1,0 +1,136 @@
+/* Navbar Styling */
+.navbar {
+    padding: 1rem 0;
+    background: linear-gradient(135deg, #6a11cb, #2575fc); /* Gradient background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  }
+  
+  .navbar-brand {
+    font-family: 'Poppins', sans-serif; /* Modern font */
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff !important; /* White text */
+    transition: transform 0.3s ease;
+  }
+  
+  .navbar-brand:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+  }
+  
+  .navbar-brand img {
+    border-radius: 50%; /* Circular logo */
+    transition: transform 0.3s ease;
+  }
+  
+  .navbar-brand img:hover {
+    transform: rotate(15deg); /* Fun rotation effect on hover */
+  }
+  
+  .nav-link {
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8) !important; /* Semi-transparent white */
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  .nav-link:hover {
+    color: #ffffff !important; /* Full white on hover */
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #ffffff; /* Underline effect */
+    transition: width 0.3s ease;
+  }
+  
+  .nav-link:hover::after {
+    width: 100%; /* Animated underline on hover */
+  }
+  
+  .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.3); /* Light border for toggler */
+  }
+  
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  }
+  
+  .btn-outline-light {
+    border-color: rgba(255, 255, 255, 0.5); /* Light border for buttons */
+    color: rgba(255, 255, 255, 0.8); /* Semi-transparent white text */
+    transition: all 0.3s ease;
+    border-radius: 25px; /* Rounded corners */
+    padding: 0.5rem 1.5rem; /* Comfortable padding */
+  }
+  
+  .btn-outline-light:hover {
+    background-color: #ffffff; /* White background on hover */
+    border-color: #ffffff; /* White border on hover */
+    color: #6a11cb; /* Gradient color text on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow on hover */
+  }
+  
+  .btn-light {
+    background-color: rgba(255, 255, 255, 0.1); /* Light background */
+    border-color: rgba(255, 255, 255, 0.1); /* Light border */
+    color: #ffffff; /* White text */
+    transition: all 0.3s ease;
+    border-radius: 25px; /* Rounded corners */
+    padding: 0.5rem 1.5rem; /* Comfortable padding */
+  }
+  
+  .btn-light:hover {
+    background-color: #ffffff; /* White background on hover */
+    border-color: #ffffff; /* White border on hover */
+    color: #2575fc; /* Gradient color text on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow on hover */
+  }
+  
+  /* Search Bar Styling */
+  .input-group {
+    width: 300px; /* Adjust width as needed */
+  }
+  
+  .input-group .form-control {
+    border-radius: 25px 0 0 25px; /* Rounded left corners */
+    border: none; /* Remove default border */
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    color: #ffffff; /* White text */
+    transition: all 0.3s ease;
+  }
+  
+  .input-group .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6); /* Semi-transparent placeholder */
+  }
+  
+  .input-group .form-control:focus {
+    background-color: rgba(255, 255, 255, 0.2); /* Brighter background on focus */
+    box-shadow: none; /* Remove default focus shadow */
+  }
+  
+  .input-group .btn {
+    border-radius: 0 25px 25px 0; /* Rounded right corners */
+    border: none; /* Remove default border */
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    color: #ffffff; /* White text */
+    transition: all 0.3s ease;
+  }
+  
+  .input-group .btn:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Brighter background on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+  }
+  
+  /* Glassmorphism Effect for Navbar */
+  .navbar {
+    backdrop-filter: blur(10px); /* Blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    background-color: rgba(106, 17, 203, 0.8); /* Semi-transparent gradient */
+  }

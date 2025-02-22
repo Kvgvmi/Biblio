@@ -1,7 +1,7 @@
 import React from 'react';
 import CategoriesSidebar from '../components/CategoriesSidebar';
-import BookList from '../components/BookList';
-import { Navbar } from 'react-bootstrap';
+import BookList from '../components/Booklist/BookList';
+import { Navbar } from 'react-bootstrap';;
 
 const HomePage = () => {
   return (

@@ -6,17 +6,18 @@ import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import AdminDashboard from './pages/AdminDashboard';
 
-import Navbar from './components/Navbar';
 import Profile from './components/Profile';
-import BookList from './components/BookList';
 import AuthorsList from './components/AuthorsList';
 import Wishlist from './components/Wishlist';
+import Navbar from './components/Navbar/Navbar';
+import BookList from './components/Booklist/BookList';
 
 function App() {
   return (
     <>
       <Navbar />
       <Routes>
+        
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />

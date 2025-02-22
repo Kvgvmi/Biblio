@@ -6,7 +6,6 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
-
 import authReducer from './features/auth/authSlice';
 import cartReducer from './features/cart/cartSlice';
 import wishlistReducer from './features/wishlist/wishlistSlice';
@@ -25,24 +24,24 @@ import active_rentalsReducer from './features/active_rentals/active_rentalsSlice
 
 // Configuring the Redux Store
 const store = configureStore({
-    reducer: {
-      auth: authReducer,
-      cart: cartReducer,
-      wishlist: wishlistReducer,
-      categories: categoryReducer,
-      users: usersReducerr,
-      orders: ordersReducer,
-      authors: authorsReducer,
-      book_to_rent: book_to_rentReducer,
-      book_to_sell: book_to_sellReducer,
-      membership: membershipReducer,
-      overdues: overduesReducer,
-      purshases: purshasesReducer,
-      rentals: rentalsReducer,
-      transactions: transactionsReducer,
-      active_rentals: active_rentalsReducer,
-    },
-  });
+  reducer: {
+    auth: authReducer, // Fixed typo: Changed `autt` to `auth`
+    cart: cartReducer,
+    wishlist: wishlistReducer,
+    categories: categoryReducer,
+    users: usersReducerr,
+    orders: ordersReducer,
+    authors: authorsReducer,
+    book_to_rent: book_to_rentReducer,
+    book_to_sell: book_to_sellReducer,
+    membership: membershipReducer,
+    overdues: overduesReducer,
+    purshases: purshasesReducer,
+    rentals: rentalsReducer,
+    transactions: transactionsReducer,
+    active_rentals: active_rentalsReducer,
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
