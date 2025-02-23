@@ -1,0 +1,91 @@
+/* CategoriesSidebar.css */
+.categories-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .search-bar button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .search-bar button:hover {
+    background-color: #0056b3;
+  }
+  
+  .categories-list {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .categories-list h3 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+  
+  .categories-list ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 10px;
+  }
+  
+  .categories-list li {
+    margin: 0;
+  }
+  
+  .categories-list a {
+    text-decoration: none;
+    color: #333;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .categories-list a:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .additional-links {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .additional-links a {
+    text-decoration: none;
+    color: #333;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .additional-links a:hover {
+    background-color: #007bff;
+    color: white;
+  }
