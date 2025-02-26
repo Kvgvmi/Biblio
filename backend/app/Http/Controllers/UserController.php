@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -19,6 +20,31 @@ class UserController extends Controller
             return response()->json(['error' => 'Failed to fetch users: ' . $e->getMessage()], 500);
         }
     }
+
+
+public function login(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|string|min:8',
+    ]);
+
+    $user = User::where('email', $request->email)->first();
+
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        return response()->json(['error' => 'Invalid email or password'], 401);
+    }
+
+    // Generate token (if using Laravel Sanctum or Passport)
+    $token = $user->createToken('authToken')->plainTextToken;
+
+    return response()->json([
+        'message' => 'Login successful',
+        'user' => $user,
+        'token' => $token
+    ]);
+}
+
 
     // Get a specific user
     public function show($id)
@@ -41,26 +67,27 @@ class UserController extends Controller
             'address' => 'nullable|string|max:255',
             'tele' => 'nullable|string|max:20',
             'cin' => 'required|string|max:20|unique:users',
-            'birthyear' => 'nullable|integer|min:1900|max:' . date('Y'),
-            'isamember' => 'required|boolean',
+            'birthyear' => 'nullable|date_format:Y-m-d', // Accepts only valid dates in YYYY-MM-DD
         ]);
-
+    
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-
+    
         try {
             $validatedData = $validator->validated();
             $validatedData['role'] = 'customer'; // Set the role automatically to 'customer'
             $validatedData['password'] = Hash::make($validatedData['password']);
-
+            $validatedData['isamember'] = false; // Default to false, cannot be set by user
+    
             $user = User::create($validatedData);
-
+    
             return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to create user: ' . $e->getMessage()], 500);
         }
     }
+    
 
     // Update a user
     public function update(Request $request, $id)
@@ -75,19 +102,22 @@ class UserController extends Controller
                 'address' => 'nullable|string|max:255',
                 'tele' => 'nullable|string|max:20',
                 'cin' => 'sometimes|string|max:20|unique:users,cin,' . $user->id,
-                'birthyear' => 'nullable|integer|min:1900|max:' . date('Y'),
-                'isamember' => 'sometimes|boolean',
+                'birthyear' => 'nullable|date_format:d/m/Y',
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()], 400);
             }
+            
 
             $validatedData = $validator->validated();
 
             if (isset($validatedData['password'])) {
                 $validatedData['password'] = Hash::make($validatedData['password']);
             }
+
+            // Ensure isamember is not updated by user
+            unset($validatedData['isamember']);
 
             $user->update($validatedData);
 

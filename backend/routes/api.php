@@ -14,6 +14,9 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OverdueController;
 use App\Http\Controllers\ActiveRentalController;
 
+Route::post('/login', [UserController::class, 'login']);
+
+
 // User Routes
 Route::apiResource('users', UserController::class);
 

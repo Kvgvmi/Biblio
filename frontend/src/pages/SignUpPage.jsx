@@ -1,144 +1,64 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '../features/auth/authSlice';
+import axiosInstance from '../components/config/axiosSetup';
 
-const SignUpPage = () => {
-  const navigate = useNavigate();
+const SignupForm = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const dispatch = useDispatch();
 
-  // Form state
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-
-  // For handling messages and loading state
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const validateEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setSuccess('');
-    setLoading(true);
-
-    // Basic validation
-    if (password !== confirmPassword) {
-      setError('Passwords do not match.');
-      setLoading(false);
-      return;
-    }
-
-    if (!validateEmail(email)) {
-      setError('Please enter a valid email address.');
-      setLoading(false);
-      return;
-    }
-
+  const onSubmit = async (data) => {
     try {
-      const response = await fetch('https://api.example.com/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          password,
-          role: 'customer'
-        }),
+      const response = await axiosInstance.post('/users', {
+        ...data,
+        // Keep birthyear as YYYY-MM-DD (default format for <input type="date" />)
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Signup failed');
-      }
-
-      const data = await response.json();
-      setSuccess(data.message || 'Signup successful! Redirecting to login...');
-      setFirstName('');
-      setLastName('');
-      setEmail('');
-      setPassword('');
-      setConfirmPassword('');
-      
-      setTimeout(() => {
-        navigate('/login');
-      }, 1500);
-      
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      dispatch(setCredentials(response.data));
+      alert('Signup successful!');
+    } catch (error) {
+      alert(error.response?.data?.error || 'Signup failed');
     }
   };
 
   return (
-    <div className="container my-4">
-      <h2>Sign Up</h2>
-      {error && <div className="alert alert-danger">{error}</div>}
-      {success && <div className="alert alert-success">{success}</div>}
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">First Name</label>
-          <input
-            type="text"
-            className="form-control"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Last Name</label>
-          <input
-            type="text"
-            className="form-control"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Email</label>
-          <input
-            type="email"
-            className="form-control"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Confirm Password</label>
-          <input
-            type="password"
-            className="form-control"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading ? 'Signing Up...' : 'Sign Up'}
-        </button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div>
+        <label>Name:</label>
+        <input {...register('name', { required: 'Name is required' })} />
+        {errors.name && <p>{errors.name.message}</p>}
+      </div>
+      <div>
+        <label>Email:</label>
+        <input type='email' {...register('email', { required: 'Email is required' })} />
+        {errors.email && <p>{errors.email.message}</p>}
+      </div>
+      <div>
+        <label>Password:</label>
+        <input type='password' {...register('password', { required: 'Password is required', minLength: { value: 8, message: 'Password must be at least 8 characters' } })} />
+        {errors.password && <p>{errors.password.message}</p>}
+      </div>
+      <div>
+        <label>Address:</label>
+        <input {...register('address')} />
+      </div>
+      <div>
+        <label>Phone:</label>
+        <input {...register('tele')} />
+      </div>
+      <div>
+        <label>CIN:</label>
+        <input {...register('cin', { required: 'CIN is required' })} />
+        {errors.cin && <p>{errors.cin.message}</p>}
+      </div>
+      <div>
+        <label>Birthdate:</label>
+        <input type='date' {...register('birthyear', { required: 'Birthdate is required' })} />
+        {errors.birthyear && <p>{errors.birthyear.message}</p>}
+      </div>
+      <button type='submit'>Sign Up</button>
+    </form>
   );
 };
 
-export default SignUpPage;
+export default SignupForm;

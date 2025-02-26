@@ -15,37 +15,24 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
+  
     try {
-      // Fetch all users from the /users endpoint
-      const usersResponse = await axiosInstance.get('/users');
-      const users = usersResponse.data;
-
-      // Find the user with the matching email and password
-      const user = users.find(
-        (user) => user.email === email && user.password === password
-      );
-
-      if (!user) {
-        setError('Invalid email or password');
-        return;
-      }
-
-      // Store the user data and token in Redux
-      dispatch(setCredentials({ user, token: 'dummy-token' })); // Replace 'dummy-token' with an actual token if available
-
-      // Redirect based on the user's role
-      if (user.role === 'admin') {
-        navigate('/AdminDashboard'); // Redirect to Admin Dashboard
-      } else if (user.role === 'customer') {
-        navigate('/CustomerDashbord'); // Redirect to Customer Dashboard
+      const response = await axiosInstance.post('/login', { email, password });
+  
+      // Store user and token in Redux
+      dispatch(setCredentials(response.data));
+  
+      // Redirect based on role
+      if (response.data.user.role === 'admin') {
+        navigate('/AdminDashboard');
       } else {
-        navigate('/'); // Fallback to home page
+        navigate('/CustomerDashboard');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      setError(err.response?.data?.error || 'Login failed');
     }
   };
+  
 
   return (
     <div className="login-container">
