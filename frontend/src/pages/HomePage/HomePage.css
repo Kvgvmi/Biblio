@@ -1,0 +1,122 @@
+/* HomePage.css */
+/* Hero Section */
+.hero-section {
+    background-image: url('../../../public/images/hd2.jpg'); /* Add your background image path */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative; /* Ensure it's positioned relative for absolute navbar */
+  }
+  .hero-content h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+  }
+  
+  .quote {
+    font-size: 1.5rem;
+    font-style: italic;
+  }
+  
+
+  
+  /* Footer */
+  .footer {
+    background-color: #333;
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+  }
+  
+  .footer h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .footer p {
+    margin: 5px 0;
+  }
+
+
+ /* Story Section */
+.story-section {
+    height: 100vh; 
+    padding: 60px 0;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; 
+  }
+  
+  .story-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333; 
+    font-family: 'Merriweather', serif; 
+    text-align: center; 
+  }
+  
+  .story-section p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #555; 
+    font-family: 'Open Sans', sans-serif; 
+    text-align: justify; 
+    max-width: 500px; 
+    margin: 0 auto; 
+    padding: 0 20px; 
+  }
+  
+  .story-images {
+    position: absolute; 
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none; 
+  }
+  
+  .story-images img {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 250px; 
+    height: auto; 
+    position: absolute;
+  }
+  
+  .story-images img:first-child {
+    top: 50px; 
+    left: 100px;
+  }
+  
+  .story-images img:last-child {
+    bottom: 20px; 
+    right: 100px;
+  }
+  
+  /* Add a decorative border to the story section */
+  .story-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 2px;
+    background-color: #6a11cb; 
+  }
+  
+  .story-section {
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.719),
+        rgba(255, 255, 255, 0.653)
+      ),
+      url('../../../public/images/d.jpeg'); /* Add a subtle pattern */
+    background-size: cover;
+    background-position: center;
+  }

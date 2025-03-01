@@ -1,78 +1,76 @@
-/* Booklist.css */
-
-/* Container for the book list */
-.book-list-container {
-  padding: 2rem 0;
-  overflow-x: auto; /* Enable horizontal scrolling */
-  white-space: nowrap; /* Prevent wrapping of book cards */
-}
-
-/* Scrollable book list */
+/* Hide the scrollbar */
 .scrollable-book-list {
   display: flex;
-  gap: 1rem; /* Space between cards */
-  padding-bottom: 1rem; /* Add padding to avoid cutting off shadows */
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
-/* Individual book card */
+.scrollable-book-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
+
+/* Book card styling */
 .book-card {
-  flex: 0 0 auto; /* Prevent flex shrinking/growing */
-  width: 250px; /* Fixed width for each card */
-  border: none;
-  border-radius: 10px;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background-color: #ffffff;
+  min-width: 250px;
+  margin: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
 }
 
 .book-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
 }
 
-/* Book image */
 .book-image {
   height: 200px;
-  width: 100%;
-  object-fit: cover; /* Ensure the image covers the space */
-  border-bottom: 1px solid #e0e0e0;
+  object-fit: cover;
 }
 
-/* Book title */
 .book-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #333333;
-  margin-bottom: 0.5rem;
-  white-space: normal; /* Allow title to wrap */
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
-/* Book price */
 .book-price {
   font-size: 1.1rem;
-  font-weight: 700;
-  color: #6a11cb; /* Purple color for price */
-  margin-bottom: 0.5rem;
+  color: #28a745; /* Green color for price */
 }
 
-/* Book description */
 .book-description {
   font-size: 0.9rem;
-  color: #666666;
-  margin-bottom: 1rem;
-  white-space: normal; /* Allow description to wrap */
+  color: #666;
 }
 
-/* Spinner for loading state */
-.spinner-container {
+.book-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* Navigation arrows */
+.navigation-arrows {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 200px;
+  margin-bottom: 10px;
 }
 
-/* Alert for error state */
-.alert-container {
-  margin-top: 2rem;
+.navigation-arrows button {
+  margin: 0 5px;
+}
+
+/* Styled modal */
+.modal-header-custom {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-body-custom {
+  padding: 20px;
+  text-align: center;
+}
+
+.modal-footer-custom {
+  justify-content: center;
+  border-top: 1px solid #dee2e6;
 }

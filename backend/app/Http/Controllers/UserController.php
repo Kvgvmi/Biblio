@@ -45,6 +45,29 @@ public function login(Request $request)
     ]);
 }
 
+public function register(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|string|min:8|confirmed',
+    ]);
+
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+    ]);
+
+    return response()->json($user, 201);
+}
+
+public function logout(Request $request)
+{
+    $request->user()->tokens()->delete();
+    return response()->json(['message' => 'Logged out successfully'], 200);
+}
+
 
     // Get a specific user
     public function show($id)
@@ -102,7 +125,7 @@ public function login(Request $request)
                 'address' => 'nullable|string|max:255',
                 'tele' => 'nullable|string|max:20',
                 'cin' => 'sometimes|string|max:20|unique:users,cin,' . $user->id,
-                'birthyear' => 'nullable|date_format:d/m/Y',
+                'birthyear' => 'nullable|date_format:Y-m-d', 
             ]);
 
             if ($validator->fails()) {

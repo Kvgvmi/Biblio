@@ -15,8 +15,22 @@ use App\Http\Controllers\OverdueController;
 use App\Http\Controllers\ActiveRentalController;
 
 Route::post('/login', [UserController::class, 'login']);
+Route::post('/check-email', function (Request $request) {
+    $exists = User::where('email', $request->email)->exists();
+    return response()->json(['exists' => $exists]);
+});
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:api');
 
+Route::post('/users/{userId}/cart', [CartController::class, 'addToCart'])->middleware('auth:api');
 
+Route::post('/users/{userId}/wishlist', [WishlistController::class, 'addToWishlist'])->middleware('auth:api');
+
+Route::get('/users/{userId}/cart', [CartController::class, 'getCart'])->middleware('auth:api');
+Route::get('/users/{userId}/wishlist', [WishlistController::class, 'getWishlist'])->middleware('auth:api');
+
+Route::delete('/users/{userId}/cart/{bookId}', [CartController::class, 'removeFromCart'])->middleware('auth:api');
+Route::delete('/users/{userId}/wishlist/{bookId}', [WishlistController::class, 'removeFromWishlist'])->middleware('auth:api');
 // User Routes
 Route::apiResource('users', UserController::class);
 
@@ -56,6 +70,14 @@ Route::apiResource('overdues', OverdueController::class);
 
 // Active Rental Routes
 Route::apiResource('active-rentals', ActiveRentalController::class);
+
+Route::middleware('auth:api')->group(function () {
+    Route::apiResource('wishlists', WishlistController::class);
+    Route::apiResource('carts', CartController::class);
+    Route::apiResource('orders', OrderController::class);
+    Route::apiResource('rentals', RentalController::class);
+    Route::apiResource('transactions', TransactionController::class);
+});
 
 
 

@@ -13,6 +13,31 @@ class WishlistController extends Controller
         return Wishlist::all();
     }
 
+    public function addToWishlist(Request $request, $userId)
+{
+    $request->validate([
+        'book_id' => 'required|exists:books,id',
+    ]);
+
+    $wishlist = Wishlist::firstOrCreate([
+        'user_id' => $userId,
+        'book_id' => $request->book_id,
+    ]);
+
+    return response()->json($wishlist, 201);
+}
+
+public function getWishlist($userId)
+{
+    $wishlist = Wishlist::where('user_id', $userId)->with('book')->get();
+    return response()->json($wishlist, 200);
+}
+public function removeFromWishlist($userId, $bookId)
+{
+    Wishlist::where('user_id', $userId)->where('book_id', $bookId)->delete();
+    return response()->json(['message' => 'Item removed from wishlist'], 200);
+}
+
     // Get a specific wishlist
     public function show($id)
     {

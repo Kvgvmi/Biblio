@@ -23,7 +23,7 @@ return new class extends Migration
                 $table->string('address')->nullable(); 
                 $table->string('tele')->nullable(); 
                 $table->string('cin')->unique(); 
-                $table->integer('birthyear')->nullable();
+                $table->date('birthyear')->nullable();
                 $table->boolean('isamember')->default(false);
                 $table->timestamps();
             });

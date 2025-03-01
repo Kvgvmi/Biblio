@@ -25,6 +25,32 @@ class CartController extends Controller
         return Cart::create($request->all());
     }
 
+    public function addToCart(Request $request, $userId)
+{
+    $request->validate([
+        'book_id' => 'required|exists:books,id',
+        'quantity' => 'required|integer|min:1',
+    ]);
+
+    $cart = Cart::updateOrCreate(
+        ['user_id' => $userId, 'book_id' => $request->book_id],
+        ['quantity' => $request->quantity]
+    );
+
+    return response()->json($cart, 201);
+}
+
+public function getCart($userId)
+{
+    $cart = Cart::where('user_id', $userId)->with('book')->get();
+    return response()->json($cart, 200);
+}
+public function removeFromCart($userId, $bookId)
+{
+    Cart::where('user_id', $userId)->where('book_id', $bookId)->delete();
+    return response()->json(['message' => 'Item removed from cart'], 200);
+}
+
     // Update a cart
     public function update(Request $request, $id)
     {

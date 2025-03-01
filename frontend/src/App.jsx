@@ -1,8 +1,8 @@
 // src/App.jsx
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import SignUpPage from './pages/SignUpPage';
+import HomePage from './pages/HomePage/HomePage';
+import SignUpPage from './pages/signUpPage/SignUpPage';
 
 import Profile from './components/Profile';
 import AuthorsList from './components/AuthorsList';

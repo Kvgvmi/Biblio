@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../features/auth/authSlice';
@@ -8,22 +8,10 @@ const Navbar = () => {
   const user = useSelector(state => state.auth.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState(''); // State to store search input
 
   const handleLogout = () => {
     dispatch(logout());
     navigate('/');
-  };
-
-  const handleSearch = (e) => {
-    e.preventDefault(); // Prevent form submission from reloading the page
-    navigate(`/books?search=${encodeURIComponent(searchQuery)}`); // Redirect to books page with search query
-  };
-
-  const handleInputChange = (e) => {
-    const query = e.target.value;
-    setSearchQuery(query); // Update search query state
-    navigate(`/books?search=${encodeURIComponent(query)}`); // Update URL dynamically
   };
 
   return (
@@ -32,13 +20,13 @@ const Navbar = () => {
         {/* Logo and Brand Name */}
         <Link className="navbar-brand d-flex align-items-center" to="/">
           <img
-            src="/images/logo.png" // Path to your logo in the public folder
+            src="/images/libraryhub.png" // Update this path to your new logo
             alt="Library Logo"
             width="40"
             height="40"
             className="d-inline-block align-top me-2"
           />
-          <span className="fs-4 fw-bold">LibraryHub</span>
+          <span className="fs-4">LibraryHub</span> {/* Removed fw-bold */}
         </Link>
 
         {/* Toggle Button for Mobile */}
@@ -56,7 +44,30 @@ const Navbar = () => {
 
         {/* Navbar Links */}
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+          {/* Centered Links */}
+          <ul className="navbar-nav mx-auto mb-2 mb-lg-0"> {/* mx-auto centers the links */}
+            {/* Link to Home */}
+            <li className="nav-item">
+              <Link className="nav-link" to="/">
+                Home
+              </Link>
+            </li>
+
+            {/* Link to Our Story (Scroll to Second Section) */}
+            <li className="nav-item">
+              <a className="nav-link" href="#our-story"> {/* Anchor link */}
+                Our Story
+              </a>
+            </li>
+
+            {/* Link to Contact (Scroll to Footer) */}
+            <li className="nav-item">
+              <a className="nav-link" href="#footer"> {/* Anchor link */}
+                Contact
+              </a>
+            </li>
+
+            {/* Conditional Links for Logged-in Users */}
             {user ? (
               <>
                 {user.role === 'customer' && (
@@ -83,23 +94,6 @@ const Navbar = () => {
               </>
             ) : null}
           </ul>
-
-          {/* Search Bar */}
-          <form className="d-flex me-3" onSubmit={handleSearch}>
-            <div className="input-group">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Search books..."
-                aria-label="Search"
-                value={searchQuery} // Controlled input
-                onChange={handleInputChange} // Update search query state and URL
-              />
-              <button className="btn btn-outline-light" type="submit">
-                <i className="fas fa-search"></i>
-              </button>
-            </div>
-          </form>
 
           {/* Login/Signup or Logout Button */}
           <div className="d-flex">
