@@ -1,0 +1,74 @@
+/* Navbar Styles */
+.navbar-custom {
+    background-image: url('../../../public/images/biblio.jpeg'); /* Add your navbar background image path */
+    background-size: cover;
+    background-position: center;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-custom .navbar-brand,
+  .navbar-custom .nav-link {
+    color: white !important;
+    font-weight: bold;
+  }
+  
+  .navbar-custom .nav-link:hover {
+    color: #ffcc00 !important;
+  }
+  
+  /* Dashboard Container */
+  .dashboard-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Section Styles */
+  .section {
+    margin-bottom: 30px;
+  }
+  
+  .section h3 {
+    color: #34495e;
+    margin-bottom: 20px;
+  }
+  
+  /* List Styles */
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .list-item {
+    flex: 1 1 calc(33.333% - 20px);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .list-item:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Card Styles */
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .card-text {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 15px;
+  }

@@ -3,25 +3,25 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../features/auth/authSlice';
 import axiosInstance from '../../components/config/axiosSetup';
-import YearPicker from 'react-year-picker'; // Use this for a smooth year selection
 import './SignUpForm.css';
+import Navbar from '../../components/Navbar/Navbar';
 
 const SignupForm = () => {
-  const { register, handleSubmit, formState: { errors }, watch } = useForm();
+  const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm();
   const dispatch = useDispatch();
-  const [birthyear, setBirthyear] = useState(null);
+  const [birthdate, setBirthdate] = useState(''); // Use an empty string for initial state
   const [successMessage, setSuccessMessage] = useState('');
 
   // Get the current date and subtract 7 years
   const maxYear = new Date().getFullYear() - 7;
 
   const onSubmit = useCallback(async (data) => {
-    if (birthyear) {
-      data.birthyear = birthyear.toString(); // Format year as string
+    if (birthdate) {
+      data.birthdate = birthdate; // Use the formatted date string
     } else {
-      data.birthyear = null;
+      data.birthdate = null;
     }
-    
+
     try {
       const response = await axiosInstance.post('/users', data);
       dispatch(setCredentials(response.data));
@@ -31,12 +31,15 @@ const SignupForm = () => {
       console.log(error.response?.data);
       alert(error.response?.data?.error || 'Signup failed');
     }
-  }, [birthyear, dispatch]);
+  }, [birthdate, dispatch]);
 
   // Watch for password field to compare with confirm password
   const password = watch('password');
 
   return (
+    <>
+    <Navbar />
+
     <div className="signup-container">
       {successMessage ? (
         <div className="success-message">{successMessage}</div>
@@ -48,74 +51,109 @@ const SignupForm = () => {
           <div className="input-row">
             <div>
               <label>Name:</label>
-              <input {...register('name', { required: 'Name is required' })} />
+              <input
+                type="text"
+                {...register('name', { required: 'Name is required' })}
+                value={watch('name') || ''}
+                onChange={(e) => setValue('name', e.target.value)}
+              />
               {errors.name && <p>{errors.name.message}</p>}
             </div>
 
             <div>
               <label>Email:</label>
-              <input type="email" {...register('email', { required: 'Email is required' })} />
+              <input
+                type="email"
+                {...register('email', { required: 'Email is required' })}
+                value={watch('email') || ''}
+                onChange={(e) => setValue('email', e.target.value)}
+              />
               {errors.email && <p>{errors.email.message}</p>}
             </div>
           </div>
 
-          {/* CIN & Birthyear Fields on the same line */}
+          {/* CIN & Birthdate Fields on the same line */}
           <div className="input-row">
             <div>
               <label>CIN:</label>
-              <input className='cin' {...register('cin', { required: 'CIN is required' })} />
+              <input
+                type="text"
+                {...register('cin', { required: 'CIN is required' })}
+                value={watch('cin') || ''}
+                onChange={(e) => setValue('cin', e.target.value)}
+              />
               {errors.cin && <p>{errors.cin.message}</p>}
             </div>
 
             <div>
               <label>Birthdate:</label>
-              <YearPicker
-                onChange={(year) => setBirthyear(year)}
-                value={birthyear}
-                min={1900}
-                max={maxYear} // Set the max year to make sure the user is at least 7 years old
-                placeholder="Select Year"
+              <input
+                type="date"
+                {...register('birthdate', { required: 'Birthdate is required' })}
+                value={birthdate}
+                onChange={(e) => setBirthdate(e.target.value)}
+                max={`${maxYear}-12-31`} // Set max date to ensure the user is at least 7 years old
               />
-              {errors.birthyear && <p>{errors.birthyear.message}</p>}
+              {errors.birthdate && <p>{errors.birthdate.message}</p>}
             </div>
           </div>
 
           {/* Other Fields */}
           <div>
             <label>Phone:</label>
-            <input {...register('tele')} />
+            <input
+              type="text"
+              {...register('tele')}
+              value={watch('tele') || ''}
+              onChange={(e) => setValue('tele', e.target.value)}
+            />
           </div>
 
           <div>
             <label>Address:</label>
-            <input {...register('address')} />
-          </div>
-
-          <div>
-            <label>Password:</label>
-            <input type="password" {...register('password', { 
-              required: 'Password is required', 
-              minLength: { value: 8, message: 'Password must be at least 8 characters' }
-            })} />
-            {errors.password && <p>{errors.password.message}</p>}
-          </div>
-
-          <div>
-            <label>Confirm Password:</label>
-            <input 
-              type="password" 
-              {...register('confirmPassword', { 
-                required: 'Confirm password is required', 
-                validate: value => value === password || 'Passwords do not match'
-              })} 
+            <input
+              type="text"
+              {...register('address')}
+              value={watch('address') || ''}
+              onChange={(e) => setValue('address', e.target.value)}
             />
-            {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+          </div>
+
+          <div className="input-row">
+            <div>
+              <label>Password:</label>
+              <input
+                type="password"
+                {...register('password', { 
+                  required: 'Password is required', 
+                  minLength: { value: 8, message: 'Password must be at least 8 characters' }
+                })}
+                value={watch('password') || ''}
+                onChange={(e) => setValue('password', e.target.value)}
+              />
+              {errors.password && <p>{errors.password.message}</p>}
+            </div>
+
+            <div>
+              <label>Confirm Password:</label>
+              <input
+                type="password"
+                {...register('confirmPassword', { 
+                  required: 'Confirm password is required', 
+                  validate: value => value === password || 'Passwords do not match'
+                })}
+                value={watch('confirmPassword') || ''}
+                onChange={(e) => setValue('confirmPassword', e.target.value)}
+              />
+              {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+            </div>
           </div>
 
           <button type="submit" className="signup-button">Sign Up</button>
         </form>
       )}
     </div>
+    </>
   );
 };
 

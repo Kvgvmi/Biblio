@@ -14,69 +14,40 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OverdueController;
 use App\Http\Controllers\ActiveRentalController;
 
+// Public Routes
 Route::post('/login', [UserController::class, 'login']);
+Route::post('/register', [UserController::class, 'register']);
 Route::post('/check-email', function (Request $request) {
     $exists = User::where('email', $request->email)->exists();
     return response()->json(['exists' => $exists]);
 });
-Route::post('/register', [UserController::class, 'register']);
-Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:api');
-
-Route::post('/users/{userId}/cart', [CartController::class, 'addToCart'])->middleware('auth:api');
-
-Route::post('/users/{userId}/wishlist', [WishlistController::class, 'addToWishlist'])->middleware('auth:api');
-
-Route::get('/users/{userId}/cart', [CartController::class, 'getCart'])->middleware('auth:api');
-Route::get('/users/{userId}/wishlist', [WishlistController::class, 'getWishlist'])->middleware('auth:api');
-
-Route::delete('/users/{userId}/cart/{bookId}', [CartController::class, 'removeFromCart'])->middleware('auth:api');
-Route::delete('/users/{userId}/wishlist/{bookId}', [WishlistController::class, 'removeFromWishlist'])->middleware('auth:api');
-// User Routes
 Route::apiResource('users', UserController::class);
 
-// Category Routes
-Route::apiResource('categories', CategoryController::class);
-
-// Author Routes
-Route::apiResource('authors', AuthorController::class);
-
-// Book to Rent Routes
-Route::apiResource('book-to-rent', BookToRentController::class);
-
-// Book to Sell Routes
-// Route::apiResource('book-to-sell', BookToSellController::class);
-Route::get('/book-to-sell', [BookToSellController::class, 'index']);
-
-// Rental Routes
-Route::apiResource('rentals', RentalController::class);
-
-// Order Routes
-Route::apiResource('orders', OrderController::class);
-
-// Membership Card Routes
-Route::apiResource('membership-cards', MembershipCardController::class);
-
-// Transaction Routes
-Route::apiResource('transactions', TransactionController::class);
-
-// Wishlist Routes
-Route::apiResource('wishlists', WishlistController::class);
-
-// Cart Routes
-Route::apiResource('carts', CartController::class);
-
-// Overdue Routes
-Route::apiResource('overdues', OverdueController::class);
-
-// Active Rental Routes
-Route::apiResource('active-rentals', ActiveRentalController::class);
-
+// Protected Routes
 Route::middleware('auth:api')->group(function () {
+    
+    Route::apiResource('categories', CategoryController::class);
+    Route::apiResource('authors', AuthorController::class);
+    Route::apiResource('book-to-rent', BookToRentController::class);
+    Route::apiResource('book-to-sell', BookToSellController::class);
+    Route::apiResource('rentals', RentalController::class);
+    Route::apiResource('orders', OrderController::class);
+    Route::apiResource('membership-cards', MembershipCardController::class);
+    Route::apiResource('transactions', TransactionController::class);
     Route::apiResource('wishlists', WishlistController::class);
     Route::apiResource('carts', CartController::class);
-    Route::apiResource('orders', OrderController::class);
-    Route::apiResource('rentals', RentalController::class);
-    Route::apiResource('transactions', TransactionController::class);
+    Route::apiResource('overdues', OverdueController::class);
+    Route::apiResource('active-rentals', ActiveRentalController::class);
+
+    // Custom Routes
+    Route::get('/me', [UserController::class, 'me']);
+    Route::post('/logout', [UserController::class, 'logout']);
+    Route::post('/users/{userId}/cart', [CartController::class, 'addToCart']);
+    Route::post('/users/{userId}/wishlist', [WishlistController::class, 'addToWishlist']);
+    Route::get('/users/{userId}/cart', [CartController::class, 'getCart']);
+    Route::get('/users/{userId}/wishlist', [WishlistController::class, 'getWishlist']);
+    Route::delete('/users/{userId}/cart/{bookId}', [CartController::class, 'removeFromCart']);
+    Route::delete('/users/{userId}/wishlist/{bookId}', [WishlistController::class, 'removeFromWishlist']);
 });
 
 

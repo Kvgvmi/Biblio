@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../features/auth/authSlice'; // Import the auth slice action
 import './LoginPage.css'; // Import the CSS file
 import axiosInstance from '../../components/config/axiosSetup';
+import Navbar from '../../components/Navbar/Navbar';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -35,6 +36,8 @@ const LoginPage = () => {
   
 
   return (
+    <>
+    <Navbar/>
     <div className="login-container">
       <div className="login-box">
         <h2>Login</h2>
@@ -66,6 +69,7 @@ const LoginPage = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 
