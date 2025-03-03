@@ -8,6 +8,7 @@ import Wishlist from './components/Wishlist';
 import BookList from './components/Booklist/BookList';
 import LoginPage from './pages/Login/LoginPage';
 import AdminDashboard from './pages/AdminDashboard/AdminDashboard';
+import EditBook from "./pages/AdminDashboard/EditBook";
 import CustomerDashboard from './pages/CustomerDashboard/CustomerDashboard';
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/dashboard" element={<AdminDashboard />} />
+        <Route path="/AdminDashboard" element={<AdminDashboard />} />
+        <Route path="/dashboard/edit-book/:id" element={<EditBook />} />;
         <Route path="/CustomerDashboard" element={<CustomerDashboard />} /> {/* Fixed typo here */}
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/books" element={<BookList />} />
